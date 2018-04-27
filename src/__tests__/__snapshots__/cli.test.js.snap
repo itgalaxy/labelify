@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`labelify should output help (2) 1`] = `
+"
+  Automate and simplify the creation of labels for your repository.
+
+  Usage: labelify [options]
+
+  Options:
+    --config
+      Path to a specific configuration file (JSON, YAML, or CommonJS), or the
+      name of a module in node_modules that points to one. If no --config
+      argument is provided, \\"labelify\\" will search for configuration files in
+      the following places, in this order:
+        - a labelify property in package.json
+        - a .labelify file (with or without filename extension:
+          .json, .yaml, .yml, and .js are available)
+        - a labelify.config.js file exporting a JS object
+      The search will begin in the working directory and move up the directory
+      tree until a configuration file is found.
+    
+    --config-basedir
+      An absolute path to the directory that relative paths defining \\"extends\\"
+      are *relative to*. Only necessary if these values are relative paths.
+    
+    --overlap, -o
+      Removes all labels which are not in configuration from the repository.
+
+    --platform, -p
+      Type of platform where your store repository.
+      Use platform option only when you have self hosted solution.
+    
+    --endpoint, -e
+      Endpoint for your API.
+      Use endpoint option only when you have nonstandard API URL fro your platform.
+
+    --version, -v
+      Show the currently installed version of labelify.
+  
+"
+`;
+
+exports[`labelify should output help 1`] = `
+"
+  Automate and simplify the creation of labels for your repository.
+
+  Usage: labelify [options]
+
+  Options:
+    --config
+      Path to a specific configuration file (JSON, YAML, or CommonJS), or the
+      name of a module in node_modules that points to one. If no --config
+      argument is provided, \\"labelify\\" will search for configuration files in
+      the following places, in this order:
+        - a labelify property in package.json
+        - a .labelify file (with or without filename extension:
+          .json, .yaml, .yml, and .js are available)
+        - a labelify.config.js file exporting a JS object
+      The search will begin in the working directory and move up the directory
+      tree until a configuration file is found.
+    
+    --config-basedir
+      An absolute path to the directory that relative paths defining \\"extends\\"
+      are *relative to*. Only necessary if these values are relative paths.
+    
+    --overlap, -o
+      Removes all labels which are not in configuration from the repository.
+
+    --platform, -p
+      Type of platform where your store repository.
+      Use platform option only when you have self hosted solution.
+    
+    --endpoint, -e
+      Endpoint for your API.
+      Use endpoint option only when you have nonstandard API URL fro your platform.
+
+    --version, -v
+      Show the currently installed version of labelify.
+  
+"
+`;
+
+exports[`labelify should output version (2) 1`] = `"0.1.0"`;
+
+exports[`labelify should output version 1`] = `"0.1.0"`;

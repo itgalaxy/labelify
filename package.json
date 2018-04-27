@@ -1,0 +1,141 @@
+{
+  "name": "labelify",
+  "version": "0.1.0",
+  "description": "Automate and simplify the creation of labels for your repository.",
+  "keywords": [
+    "label",
+    "labels",
+    "git",
+    "repo",
+    "github",
+    "gitlab",
+    "utils"
+  ],
+  "author": "Itgalaxy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itgalaxy/labelify.git"
+  },
+  "homepage": "https://github.com/itgalaxy/labelify",
+  "bugs": "https://github.com/itgalaxy/labelify/issues",
+  "main": "src/index.js",
+  "dependencies": {
+    "meow": "^5.0.0",
+    "resolve-from": "^4.0.0",
+    "cosmiconfig": "^5.0.0",
+    "got": "^8.3.0",
+    "pkg-up": "^2.0.0",
+    "hosted-git-info": "git+https://github.com/silverwind/hosted-git-info.git#generic",
+    "lodash.omit": "^4.5.0",
+    "lodash.partial": "^4.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "del-cli": "^1.1.0",
+    "eslint": "^4.1.1",
+    "eslint-plugin-ava": "^4.2.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-itgalaxy": "^68.0.1",
+    "eslint-plugin-jest": "^21.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.0",
+    "eslint-plugin-lodash": "^2.4.3",
+    "eslint-plugin-markdown": "^1.0.0-beta.8",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.1.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-unicorn": "^4.0.0",
+    "execa": "^0.10.0",
+    "husky": "^0.14.1",
+    "jest": "^23.0.0",
+    "lint-staged": "^7.0.0",
+    "nock": "^9.2.5",
+    "npm-run-all": "^4.0.1",
+    "npmpub": "^3.1.0",
+    "prettier": "^1.5.2",
+    "remark-cli": "^5.0.0",
+    "remark-preset-lint-itgalaxy": "^12.0.0"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "labelify": "node ./bin/labelify --overlap",
+    "lint:prettify": "prettier --list-different '{bin,src,__tests__}/**/*.{js,mjs,jsx,md}' '*.{js,mjs,jsx,md}'",
+    "lint:eslint": "eslint --cache --report-unused-disable-directives . !__tests__/resources/** --ignore-path .gitignore --ext 'js,.mjs,.jsx,.md'",
+    "lint:remark": "remark . -i .gitignore -f -q",
+    "lint": "npm-run-all -l -p lint:**",
+    "prettify": "npm run lint:prettify -- --write",
+    "fix:eslint": "npm run lint:eslint -- --fix",
+    "fix": "npm-run-all -l -p 'fix:**'",
+    "pretest": "npm run lint",
+    "test": "npm run test-only",
+    "test-only": "jest --coverage --testPathIgnorePatterns fixtures",
+    "release": "npmpub"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "sourceType": "script"
+    },
+    "extends": [
+      "plugin:itgalaxy/markdown",
+      "plugin:itgalaxy/jest",
+      "plugin:itgalaxy/esnext",
+      "plugin:itgalaxy/node"
+    ],
+    "overrides": [
+      {
+        "env": {
+          "browser": true,
+          "node": true
+        },
+        "files": [
+          "**/*.md"
+        ],
+        "settings": {
+          "node": {
+            "allowModules": [
+              "labelify"
+            ]
+          }
+        },
+        "rules": {
+          "strict": "off",
+          "no-process-env": "off",
+          "no-console": "off",
+          "import/no-unresolved": [
+            "error",
+            {
+              "commonjs": true,
+              "caseSensitive": true,
+              "ignore": [
+                "^labelify$"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "files": [
+          "**/__tests__/**/*.js"
+        ],
+        "rules": {
+          "node/no-unsupported-features": "off"
+        }
+      }
+    ],
+    "root": true
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-itgalaxy"
+    ]
+  },
+  "engines": {
+    "node": ">= 6.9.0 || >= 8.9.0"
+  },
+  "files": [
+    "bin",
+    "src",
+    "!**/__tests__/**"
+  ]
+}

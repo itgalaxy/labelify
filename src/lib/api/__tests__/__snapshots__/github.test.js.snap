@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`github api should success create the label 1`] = `
+Object {
+  "color": "fff",
+  "default": false,
+  "description": "description",
+  "id": 1,
+  "name": "name",
+  "url": "https://api.github.com/repos/itgalaxy/labelify/labels/name",
+}
+`;
+
+exports[`github api should success create the label without description 1`] = `
+Object {
+  "color": "fff",
+  "default": false,
+  "description": null,
+  "id": 1,
+  "name": "name",
+  "url": "https://api.github.com/repos/itgalaxy/labelify/labels/name",
+}
+`;
+
+exports[`github api should success get labels 1`] = `
+Array [
+  Object {
+    "color": "fff",
+    "default": false,
+    "description": "description",
+    "id": 1,
+    "name": "name",
+    "url": "https://api.github.com/repos/itgalaxy/labelify/labels/name",
+  },
+  Object {
+    "color": "fff",
+    "default": false,
+    "description": "other description",
+    "id": 2,
+    "name": "other-name",
+    "url": "https://api.github.com/repos/itgalaxy/labelify/labels/other-name",
+  },
+]
+`;
+
+exports[`github api should success remove the label 1`] = `""`;
+
+exports[`github api should success update the label 1`] = `
+Object {
+  "color": "000",
+  "default": false,
+  "description": "other-description",
+  "id": 1,
+  "name": "name",
+  "url": "https://api.github.com/repos/itgalaxy/labelify/labels/name",
+}
+`;
+
+exports[`github api should success update the label without description 1`] = `
+Object {
+  "color": "000",
+  "default": false,
+  "description": null,
+  "id": 1,
+  "name": "name",
+  "url": "https://api.github.com/repos/itgalaxy/labelify/labels/name",
+}
+`;
