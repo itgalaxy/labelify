@@ -350,6 +350,7 @@ PR welcome
 
 - [git-label](https://github.com/jasonbellamy/git-label) - inspiration and ideas.
 - [got](https://github.com/sindresorhus/got) - for great library without `several megabytes`.
+- the logo designed by [@reallinfo](https://github.com/reallinfo)
 
 ## Contribution
 
