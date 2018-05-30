@@ -67,7 +67,7 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
     );
   }
 
-  const isSelfHosted = info.type === "generic";
+  const isSelfHosted = platform === "generic";
 
   let endpoint = options.endpoint ? options.endpoint : null;
 
