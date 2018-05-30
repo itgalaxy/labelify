@@ -20,6 +20,7 @@
   "homepage": "https://github.com/itgalaxy/labelify",
   "bugs": "https://github.com/itgalaxy/labelify/issues",
   "main": "src/index.js",
+  "bin": "bin/labelify.js",
   "dependencies": {
     "meow": "^5.0.0",
     "resolve-from": "^4.0.0",
