@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/vertical.png" alt="labelify" height="150px"></p>
+
 # labelify
 
 [![NPM version](https://img.shields.io/npm/v/labelify.svg)](https://www.npmjs.org/package/labelify)
@@ -348,6 +350,7 @@ PR welcome
 
 - [git-label](https://github.com/jasonbellamy/git-label) - inspiration and ideas.
 - [got](https://github.com/sindresorhus/got) - for great library without `several megabytes`.
+- the logo designed by [@reallinfo](https://github.com/reallinfo)
 
 ## Contribution
 
