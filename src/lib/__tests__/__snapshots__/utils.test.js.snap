@@ -620,11 +620,11 @@ exports[`utils should throw error when extended config not found using \`configF
 
 exports[`utils should throw error when repository URL is not passed 1`] = `"Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'"`;
 
-exports[`utils should throw error when repository URL is not supported (2) 1`] = `"Don't support 'bitbucket' platform. PR welcome"`;
+exports[`utils should throw error when repository URL is not supported (2) 1`] = `"Unsupported 'bitbucket' platform"`;
 
-exports[`utils should throw error when repository URL is not supported 1`] = `"Don't support 'generic' platform. PR welcome"`;
+exports[`utils should throw error when repository URL is not supported 1`] = `"Looks you use self host platform, please use 'platform' options"`;
 
-exports[`utils should throw error when repository URL is self hosted platform without 'platform' option 1`] = `"Don't support 'generic' platform. PR welcome"`;
+exports[`utils should throw error when repository URL is self hosted platform without 'platform' option 1`] = `"Looks you use self host platform, please use 'platform' options"`;
 
 exports[`utils should throw the error when \`package.json\` contain broken repository object field 1`] = `"Field 'repository' in 'package.json' contain invalid value"`;
 

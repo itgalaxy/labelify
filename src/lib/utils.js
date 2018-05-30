@@ -67,7 +67,7 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
     );
   }
 
-  const isSelfHosted = platform === "generic";
+  const isSelfHosted = info.type === "generic";
 
   let endpoint = options.endpoint ? options.endpoint : null;
 
@@ -105,7 +105,11 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
 
       break;
     default:
-      throw new Error(`Don't support '${platform}' platform. PR welcome`);
+      throw new Error(
+        isSelfHosted
+          ? "Looks you use self host platform, please use 'platform' options"
+          : `Unsupported '${platform}' platform`
+      );
   }
 
   return {
