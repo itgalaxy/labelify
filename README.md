@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/vertical.png" alt="labelify" height="150px"></p>
+
 # labelify
 
 [![NPM version](https://img.shields.io/npm/v/labelify.svg)](https://www.npmjs.org/package/labelify)
