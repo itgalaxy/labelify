@@ -118,10 +118,21 @@ describe("utils", () => {
       getPlatformAndEndpoint("https://github.com/itgalaxy/labelify.git")
     ).toMatchSnapshot());
 
+  it("should success get platform and endpoint for github (git)", () =>
+    expect(
+      getPlatformAndEndpoint("git+https://github.com/111/222.git")
+    ).toMatchSnapshot());
+
+  it("should success get platform and endpoint for github (git shortcut)", () =>
+    expect(getPlatformAndEndpoint("github:111/222")).toMatchSnapshot());
+
   it("should success get platform and endpoint for gitlab", () =>
     expect(
       getPlatformAndEndpoint("https://gitlab.com/itgalaxy/labelify.git")
     ).toMatchSnapshot());
+
+  it("should success get platform and endpoint for gitlab (git shortcut)", () =>
+    expect(getPlatformAndEndpoint("gitlab:111/222")).toMatchSnapshot());
 
   it("should success get platform and endpoint for github (self-hosted)", () =>
     expect(
@@ -133,7 +144,14 @@ describe("utils", () => {
       )
     ).toMatchSnapshot());
 
-  it("should success get platform and endpoint for githab (self-hosted)", () =>
+  it("should success get platform and endpoint for github (self-hosted with nonstandard protocol)", () =>
+    expect(
+      getPlatformAndEndpoint("ssh://git@mydomain.com/abc/def", {
+        platform: "github"
+      })
+    ).toMatchSnapshot());
+
+  it("should success get platform and endpoint for gitlab (self-hosted)", () =>
     expect(
       getPlatformAndEndpoint(
         "https://gitlab.company.com/itgalaxy/labelify.git",
@@ -141,6 +159,13 @@ describe("utils", () => {
           platform: "gitlab"
         }
       )
+    ).toMatchSnapshot());
+
+  it("should success get platform and endpoint for gitlab (self-hosted with nonstandard protocol)", () =>
+    expect(
+      getPlatformAndEndpoint("ssh://git@mydomain.com/abc/def", {
+        platform: "gitlab"
+      })
     ).toMatchSnapshot());
 
   it("should success get platform and endpoint for custom platform and custom endpoint", () =>
@@ -169,6 +194,20 @@ describe("utils", () => {
     expect(
       getPlatformAndEndpoint("github:itgalaxy/labelify")
     ).toMatchSnapshot());
+
+  it("should throw error when repository URL doesn't contains user", () =>
+    expect(() =>
+      getPlatformAndEndpoint("https://gitlab.company.com", {
+        platform: "gitlab"
+      })
+    ).toThrowErrorMatchingSnapshot());
+
+  it("should throw error when repository URL doesn't contains project", () =>
+    expect(() =>
+      getPlatformAndEndpoint("https://gitlab.company.com/user", {
+        platform: "gitlab"
+      })
+    ).toThrowErrorMatchingSnapshot());
 
   it("should throw error when repository URL is not passed", () =>
     expect(() => getPlatformAndEndpoint()).toThrowErrorMatchingSnapshot());
@@ -308,7 +347,6 @@ describe("utils", () => {
   it("should success get token", () => {
     expect.assertions(4);
 
-    /* eslint-disable no-process-env */
     expect(typeof getToken()).toBe("undefined");
 
     process.env.TOKEN = "TOKEN";
@@ -328,8 +366,6 @@ describe("utils", () => {
     expect(getToken()).toBe(process.env.GITLAB_TOKEN);
 
     delete process.env.GITLAB_TOKEN;
-
-    /* eslint-enable no-process-env */
   });
 
   it("should success execute hex regexp", () => {

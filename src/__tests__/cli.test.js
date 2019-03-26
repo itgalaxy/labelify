@@ -1,7 +1,7 @@
 "use strict";
 
-const execa = require("execa");
 const path = require("path");
+const execa = require("execa");
 
 const labelifyCLI = path.resolve(__dirname, "../../bin/labelify.js");
 

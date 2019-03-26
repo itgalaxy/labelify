@@ -1,16 +1,15 @@
 sudo: false
 
 git:
-  depth: 1
+  depth: 10
 
 branches:
   only:
     - master
-    - /^greenkeeper/.*$/
+    - next
 
 language: node_js
 
-# cache node modules
 cache:
   directories:
     - $HOME/.npm
@@ -19,25 +18,28 @@ cache:
 matrix:
   fast_finish: true
   include:
-    - node_js: '10'
+    - node_js: "11"
       script: npm run $JOB_PART
       env: JOB_PART=pretest
-    - node_js: '10'
+    - node_js: "11"
       script: npm run $JOB_PART
-      env: JOB_PART=test-only
-    - node_js: '9'
+      env: JOB_PART=test:only
+    - node_js: "10"
       script: npm run $JOB_PART
-      env: JOB_PART=test-only
-    - node_js: '8'
+      env: JOB_PART=test:only
+    - node_js: "8"
       script: npm run $JOB_PART
-      env: JOB_PART=test-only
-    - node_js: '6'
-      script: npm run $JOB_PART
-      env: JOB_PART=test-only
-      sudo: required
+      env: JOB_PART=test:only
 
 before_install:
-  - npm i -g npm
-  - nvm --version
+  - npm install -g npm@latest
+
+install:
+  - npm ci
+
+before_script:
   - node --version
   - npm --version
+
+script:
+  - npm run ci:$JOB_PART

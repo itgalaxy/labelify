@@ -1,7 +1,7 @@
 "use strict";
 
-const githubAPI = require("../github");
 const nock = require("nock");
+const githubAPI = require("../github");
 
 const { createLabel, getLabels, removeLabel, updateLabel } = githubAPI;
 

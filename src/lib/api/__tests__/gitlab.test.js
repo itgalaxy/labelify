@@ -1,7 +1,7 @@
 "use strict";
 
-const gitlabAPI = require("../gitlab");
 const nock = require("nock");
+const gitlabAPI = require("../gitlab");
 
 const { createLabel, getLabels, removeLabel, updateLabel } = gitlabAPI;
 
