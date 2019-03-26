@@ -2,11 +2,11 @@
 
 "use strict";
 
+const path = require("path");
+const meow = require("meow");
+const resolveFrom = require("resolve-from");
 // eslint-disable-next-line node/no-unpublished-require
 const labelify = require("../src");
-const meow = require("meow");
-const path = require("path");
-const resolveFrom = require("resolve-from");
 
 const pkg = require("../package");
 
@@ -168,5 +168,5 @@ Promise.resolve()
 
     const exitCode = typeof error.code === "number" ? error.code : 1;
 
-    process.exit(exitCode); // eslint-disable-line no-process-exit
+    process.exit(exitCode);
   });

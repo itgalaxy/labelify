@@ -2,16 +2,21 @@
 
 const fs = require("fs");
 const path = require("path");
+const url = require("url");
 const cosmiconfig = require("cosmiconfig");
 const got = require("got");
 const pkgUp = require("pkg-up");
 const hostedGitInfo = require("hosted-git-info");
 const resolveFrom = require("resolve-from");
-const omit = require("lodash.omit");
-const partial = require("lodash.partial");
 
 const pkg = require("../../package.json");
 const hexRegExp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+const protocolToRepresentationMap = {
+  "git+ssh": "sshurl",
+  "git+https": "https",
+  ssh: "sshurl",
+  git: "git"
+};
 
 function request(endpoint, options) {
   return got(endpoint, options);
@@ -57,8 +62,50 @@ function getModulePath(basedir, lookup) {
   return modulePath;
 }
 
+function parseGitUrl(giturl) {
+  if (typeof giturl !== "string") {
+    // eslint-disable-next-line no-param-reassign
+    giturl = String(giturl);
+  }
+
+  const matched = giturl.match(
+    /^([^@]+)@([^:/]+):[/]?((?:[^/]+[/])?[^/]+?)(?:[.]git)?(#.*)?$/
+  );
+
+  if (!matched) {
+    // eslint-disable-next-line node/no-deprecated-api
+    return url.parse(giturl);
+  }
+
+  return {
+    protocol: "git+ssh:",
+    slashes: true,
+    auth: matched[1],
+    host: matched[2],
+    port: null,
+    hostname: matched[2],
+    hash: matched[4],
+    search: null,
+    query: null,
+    pathname: `/${matched[3]}`,
+    path: `/${matched[3]}`,
+    href: `git+ssh://${matched[1]}@${matched[2]}/${matched[3]}${matched[4] ||
+      ""}`
+  };
+}
+
+function protocolToRepresentation(protocol) {
+  if (protocol.substr(-1) === ":") {
+    // eslint-disable-next-line no-param-reassign
+    protocol = protocol.slice(0, -1);
+  }
+
+  return protocolToRepresentationMap[protocol] || protocol;
+}
+
 function getPlatformAndEndpoint(repositoryURL, options = {}) {
   const info = hostedGitInfo.fromUrl(repositoryURL);
+
   const platform = options.platform ? options.platform : info && info.type;
 
   if (!platform) {
@@ -67,7 +114,8 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
     );
   }
 
-  const isSelfHosted = info.type === "generic";
+  // The variable `info` is undefined when it is self-hosted URL.
+  const isSelfHosted = !info;
 
   let endpoint = options.endpoint ? options.endpoint : null;
 
@@ -79,28 +127,59 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
     };
   }
 
+  let protocol = null;
+  let host = null;
+  let user = null;
+  let project = null;
+
+  if (isSelfHosted) {
+    const parsedRepositoryURL = parseGitUrl(repositoryURL);
+    const matched = parsedRepositoryURL.path.match(
+      /^[/]([^/]+)[/]([^/]+?)(?:[.]git|[/])?$/
+    );
+
+    const defaultProtocolRepresentation = protocolToRepresentation(
+      parsedRepositoryURL.protocol
+    );
+
+    protocol = /https?/.test(defaultProtocolRepresentation)
+      ? defaultProtocolRepresentation
+      : "https";
+    ({ host } = parsedRepositoryURL);
+
+    if (matched && matched[1] !== null) {
+      user = decodeURIComponent(matched[1].replace(/^:/, ""));
+    } else {
+      throw new Error(
+        `Can't resolve 'user' from 'repository' field in 'package.json'. Please correct 'repository' field.`
+      );
+    }
+
+    if (matched && matched[2]) {
+      project = decodeURIComponent(matched[2]);
+    } else {
+      throw new Error(
+        `Can't resolve 'project' from 'repository' field in 'package.json'. Please correct 'repository' field.`
+      );
+    }
+  } else {
+    ({ default: protocol, domain: host, user, project } = info);
+  }
+
   switch (platform) {
     case "github":
       if (isSelfHosted) {
-        endpoint = `${info.default}://${info.domain}/repos/${info.user}/${
-          info.project
-        }/labels`;
+        endpoint = `${protocol}://${host}/repos/${user}/${project}/labels`;
       } else {
-        endpoint = `https://api.github.com/repos/${info.user}/${
-          info.project
-        }/labels`;
+        endpoint = `https://api.github.com/repos/${user}/${project}/labels`;
       }
 
       break;
     case "gitlab":
       if (isSelfHosted) {
-        endpoint = `${info.default}://${info.domain}/api/v4/projects/${
-          info.user
-        }%2F${info.project}/labels`;
+        endpoint = `${protocol}://${host}/api/v4/projects/${user}%2F${project}/labels`;
       } else {
-        endpoint = `https://gitlab.com/api/v4/projects/${info.user}%2F${
-          info.project
-        }/labels`;
+        endpoint = `https://gitlab.com/api/v4/projects/${user}%2F${project}/labels`;
       }
 
       break;
@@ -181,15 +260,13 @@ function getProjectMeta(options = {}) {
 }
 
 function getToken() {
-  /* eslint-disable no-process-env */
   return (
     process.env.TOKEN || process.env.GITHUB_TOKEN || process.env.GITLAB_TOKEN
   );
-  /* eslint-enable no-process-env */
 }
 
-function linkWalker(url, options = {}, list = []) {
-  return request(url, options).then(response => {
+function linkWalker(requestedURL, options = {}, list = []) {
+  return request(requestedURL, options).then(response => {
     // eslint-disable-next-line no-param-reassign
     list = list.concat(response.body);
 
@@ -224,7 +301,7 @@ function mergeConfigs(originConfig, extendedConfig) {
 }
 
 function augmentConfigExtended(cosmiconfigResultArg) {
-  const cosmiconfigResult = cosmiconfigResultArg; // Lock in for Flow
+  const cosmiconfigResult = cosmiconfigResultArg;
 
   if (!cosmiconfigResult) {
     return Promise.resolve(null);
@@ -248,7 +325,7 @@ function loadExtendedConfig(config, configDir, extendLookup) {
   const extendPath = getModulePath(configDir, extendLookup);
 
   return cosmiconfig(null, {
-    transform: partial(augmentConfigExtended)
+    transform: (...args) => augmentConfigExtended(...args)
   }).load(extendPath);
 }
 
@@ -261,7 +338,8 @@ function extendConfig(config, configDir) {
     ? config.extends
     : [config.extends];
 
-  const originalWithoutExtends = omit(config, "extends");
+  const { extends: extendsProp, ...originalWithoutExtends } = config;
+
   const loadExtends = normalizedExtends.reduce(
     (resultPromise, extendLookup) =>
       resultPromise.then(resultConfig =>
@@ -278,9 +356,16 @@ function extendConfig(config, configDir) {
     Promise.resolve(originalWithoutExtends)
   );
 
-  return loadExtends.then(resultConfig =>
-    mergeConfigs(resultConfig, omit(config, ["labels", "extends"]))
-  );
+  return loadExtends.then(resultConfig => {
+    const {
+      // eslint-disable-next-line no-shadow
+      extends: extendsProp,
+      labels,
+      ...originalWithoutLabelsAndExtends
+    } = config;
+
+    return mergeConfigs(resultConfig, originalWithoutLabelsAndExtends);
+  });
 }
 
 function augmentConfigFull(cosmiconfigResultArg, options) {

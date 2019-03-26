@@ -80,6 +80,6 @@ exports[`labelify should output help 1`] = `
 "
 `;
 
-exports[`labelify should output version (2) 1`] = `"0.2.0"`;
+exports[`labelify should output version (2) 1`] = `"1.0.0"`;
 
-exports[`labelify should output version 1`] = `"0.2.0"`;
+exports[`labelify should output version 1`] = `"1.0.0"`;

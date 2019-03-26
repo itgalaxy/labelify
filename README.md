@@ -10,14 +10,13 @@
 [![Travis Build Status](https://img.shields.io/travis/itgalaxy/labelify/master.svg?label=build)](https://travis-ci.org/itgalaxy/labelify)
 [![dependencies Status](https://david-dm.org/itgalaxy/labelify/status.svg)](https://david-dm.org/itgalaxy/labelify)
 [![devDependencies Status](https://david-dm.org/itgalaxy/labelify/dev-status.svg)](https://david-dm.org/itgalaxy/labelify?type=dev)
-[![Greenkeeper badge](https://badges.greenkeeper.io/itgalaxy/labelify.svg)](https://greenkeeper.io)
 
-Automate and simplify the creation of labels for your GitHub/Github/Send_PR_For_You_Platform repository.
+Automate and simplify the creation of labels for your GitHub/GitLab/Send_a_PR_For_You_Platform repository.
 
 ## Highlights
 
 - Support configuration file.
-- Support Github/Gitlab platforms (include self hosted solutions).
+- Support GitHub/GitLab platforms (include self hosted solutions).
 - CLI.
 - Promise interface.
 - Simple usage.

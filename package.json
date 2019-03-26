@@ -1,6 +1,6 @@
 {
   "name": "labelify",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Automate and simplify the creation of labels for your repository.",
   "keywords": [
     "label",
@@ -26,51 +26,48 @@
     "resolve-from": "^4.0.0",
     "cosmiconfig": "^5.0.0",
     "got": "^8.3.0",
-    "pkg-up": "^2.0.0",
-    "hosted-git-info": "git+https://github.com/silverwind/hosted-git-info.git#generic",
-    "lodash.omit": "^4.5.0",
-    "lodash.partial": "^4.2.1"
+    "pkg-up": "^3.0.1",
+    "hosted-git-info": "^2.7.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^10.0.1",
     "del-cli": "^1.1.0",
-    "eslint": "^4.1.1",
-    "eslint-plugin-ava": "^4.2.1",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-itgalaxy": "^68.0.1",
-    "eslint-plugin-jest": "^21.1.0",
-    "eslint-plugin-jsx-a11y": "^6.0.0",
-    "eslint-plugin-lodash": "^2.4.3",
-    "eslint-plugin-markdown": "^1.0.0-beta.8",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-prettier": "^2.1.2",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-unicorn": "^4.0.0",
-    "execa": "^0.10.0",
-    "husky": "^0.14.1",
-    "jest": "^23.0.0",
-    "lint-staged": "^7.0.0",
-    "nock": "^9.2.5",
+    "eslint": "^5.15.3",
+    "eslint-plugin-ava": "^6.0.0",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-itgalaxy": "^99.0.0",
+    "eslint-plugin-jest": "^22.4.1",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-lodash": "^5.1.0",
+    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-unicorn": "^7.1.0",
+    "execa": "^1.0.0",
+    "husky": "^1.3.1",
+    "jest": "^24.5.0",
+    "lint-staged": "^8.1.5",
+    "nock": "^10.0.6",
     "npm-run-all": "^4.0.1",
-    "npmpub": "^3.1.0",
+    "npmpub": "^4.1.0",
     "prettier": "^1.5.2",
-    "remark-cli": "^5.0.0",
-    "remark-preset-lint-itgalaxy": "^12.0.0"
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-itgalaxy": "^14.0.0"
   },
   "scripts": {
-    "precommit": "lint-staged",
     "labelify": "node ./bin/labelify --overlap",
-    "lint:prettify": "prettier --list-different '{bin,src,__tests__}/**/*.{js,mjs,jsx,md}' '*.{js,mjs,jsx,md}'",
-    "lint:eslint": "eslint --cache --report-unused-disable-directives . !__tests__/resources/** --ignore-path .gitignore --ext 'js,.mjs,.jsx,.md'",
+    "lint:prettier": "prettier --list-different '{bin,src,__tests__}/**/*.{js,mjs,jsx,md,yml}' '*.{js,mjs,jsx,md,yml}'",
+    "lint:eslint": "eslint --cache --report-unused-disable-directives . --ignore-path .gitignore --ext 'js,.mjs,.jsx,.md'",
     "lint:remark": "remark . -i .gitignore -f -q",
     "lint": "npm-run-all -l -p lint:**",
     "prettify": "npm run lint:prettify -- --write",
     "fix:eslint": "npm run lint:eslint -- --fix",
     "fix": "npm-run-all -l -p 'fix:**'",
     "pretest": "npm run lint",
-    "test": "npm run test-only",
-    "test-only": "jest --coverage --testPathIgnorePatterns fixtures",
+    "test:only": "jest --coverage --testPathIgnorePatterns fixtures",
+    "test": "npm run test:only",
     "release": "npmpub"
   },
   "eslintConfig": {
@@ -78,10 +75,10 @@
       "sourceType": "script"
     },
     "extends": [
-      "plugin:itgalaxy/markdown",
-      "plugin:itgalaxy/jest",
+      "plugin:itgalaxy/node",
       "plugin:itgalaxy/esnext",
-      "plugin:itgalaxy/node"
+      "plugin:itgalaxy/jest",
+      "plugin:itgalaxy/markdown"
     ],
     "overrides": [
       {
@@ -132,7 +129,7 @@
     ]
   },
   "engines": {
-    "node": ">= 6.9.0 || >= 8.9.0"
+    "node": ">= 8.9.0"
   },
   "files": [
     "bin",

@@ -554,11 +554,27 @@ Object {
 }
 `;
 
-exports[`utils should success get platform and endpoint for githab (self-hosted) 1`] = `
+exports[`utils should success get platform and endpoint for github (git shortcut) 1`] = `
 Object {
-  "endpoint": "https://gitlab.company.com/api/v4/projects/itgalaxy%2Flabelify/labels",
+  "endpoint": "https://api.github.com/repos/111/222/labels",
+  "isSelfHosted": false,
+  "platform": "github",
+}
+`;
+
+exports[`utils should success get platform and endpoint for github (git) 1`] = `
+Object {
+  "endpoint": "https://api.github.com/repos/111/222/labels",
+  "isSelfHosted": false,
+  "platform": "github",
+}
+`;
+
+exports[`utils should success get platform and endpoint for github (self-hosted with nonstandard protocol) 1`] = `
+Object {
+  "endpoint": "https://mydomain.com/repos/abc/def/labels",
   "isSelfHosted": true,
-  "platform": "gitlab",
+  "platform": "github",
 }
 `;
 
@@ -575,6 +591,30 @@ Object {
   "endpoint": "https://api.github.com/repos/itgalaxy/labelify/labels",
   "isSelfHosted": false,
   "platform": "github",
+}
+`;
+
+exports[`utils should success get platform and endpoint for gitlab (git shortcut) 1`] = `
+Object {
+  "endpoint": "https://gitlab.com/api/v4/projects/111%2F222/labels",
+  "isSelfHosted": false,
+  "platform": "gitlab",
+}
+`;
+
+exports[`utils should success get platform and endpoint for gitlab (self-hosted with nonstandard protocol) 1`] = `
+Object {
+  "endpoint": "https://mydomain.com/api/v4/projects/abc%2Fdef/labels",
+  "isSelfHosted": true,
+  "platform": "gitlab",
+}
+`;
+
+exports[`utils should success get platform and endpoint for gitlab (self-hosted) 1`] = `
+Object {
+  "endpoint": "https://gitlab.company.com/api/v4/projects/itgalaxy%2Flabelify/labels",
+  "isSelfHosted": true,
+  "platform": "gitlab",
 }
 `;
 
@@ -618,13 +658,17 @@ exports[`utils should throw error when config not found using \`configFile\` opt
 
 exports[`utils should throw error when extended config not found using \`configFile\` option 1`] = `"Could not find \\"./labelify-extended.config\\" extends. Do you need a \`configBasedir\`?"`;
 
+exports[`utils should throw error when repository URL doesn't contains project 1`] = `"Can't resolve 'user' from 'repository' field in 'package.json'. Please correct 'repository' field."`;
+
+exports[`utils should throw error when repository URL doesn't contains user 1`] = `"Can't resolve 'user' from 'repository' field in 'package.json'. Please correct 'repository' field."`;
+
 exports[`utils should throw error when repository URL is not passed 1`] = `"Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'"`;
 
 exports[`utils should throw error when repository URL is not supported (2) 1`] = `"Unsupported 'bitbucket' platform"`;
 
-exports[`utils should throw error when repository URL is not supported 1`] = `"Looks you use self host platform, please use 'platform' options"`;
+exports[`utils should throw error when repository URL is not supported 1`] = `"Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'"`;
 
-exports[`utils should throw error when repository URL is self hosted platform without 'platform' option 1`] = `"Looks you use self host platform, please use 'platform' options"`;
+exports[`utils should throw error when repository URL is self hosted platform without 'platform' option 1`] = `"Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'"`;
 
 exports[`utils should throw the error when \`package.json\` contain broken repository object field 1`] = `"Field 'repository' in 'package.json' contain invalid value"`;
 
