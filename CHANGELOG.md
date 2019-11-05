@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org).
 
+## 2.0.0 - 2019-11-05
+
+- Changed: drop support node@8.
+- Chore: update deps
+
 ## 1.0.1 - 2019-04-24
 
 - Chore: update deps

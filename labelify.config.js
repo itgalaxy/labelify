@@ -149,6 +149,10 @@ module.exports = {
     {
       color: "#a1aa1a",
       name: "1.0.0"
+    },
+    {
+      color: "#b1bb1b",
+      name: "2.0.0"
     }
   ]
 };

@@ -1,8 +1,8 @@
 "use strict";
 
-const apiResolver = require("..");
 const githubAPI = require("../github");
 const gitlabAPI = require("../gitlab");
+const apiResolver = require("..");
 
 describe("api resolved", () => {
   it("should resolve github api", () => {
