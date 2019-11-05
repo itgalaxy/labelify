@@ -43,43 +43,33 @@ describe("utils", () => {
 
     expect(buildGotOptions()).toEqual({
       headers: {
-        "user-agent": `labelify/${
-          pkg.version
-        } (https://github.com/itgalaxy/labelify)`
+        "user-agent": `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`
       }
     });
 
     expect(buildGotOptions({})).toEqual({
       headers: {
-        "user-agent": `labelify/${
-          pkg.version
-        } (https://github.com/itgalaxy/labelify)`
+        "user-agent": `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`
       }
     });
 
     expect(buildGotOptions({ foo: "bar" })).toEqual({
       foo: "bar",
       headers: {
-        "user-agent": `labelify/${
-          pkg.version
-        } (https://github.com/itgalaxy/labelify)`
+        "user-agent": `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`
       }
     });
 
     expect(buildGotOptions({ headers: {} })).toEqual({
       headers: {
-        "user-agent": `labelify/${
-          pkg.version
-        } (https://github.com/itgalaxy/labelify)`
+        "user-agent": `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`
       }
     });
 
     expect(buildGotOptions({ headers: { foo: "bar" } })).toEqual({
       headers: {
         foo: "bar",
-        "user-agent": `labelify/${
-          pkg.version
-        } (https://github.com/itgalaxy/labelify)`
+        "user-agent": `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`
       }
     });
   });

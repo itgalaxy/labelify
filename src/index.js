@@ -51,6 +51,7 @@ function labelify(options = {}) {
         throw new Error("Token is required");
       }
 
+      // eslint-disable-next-line promise/no-return-wrap
       return Promise.resolve();
     })
     .then(() => {

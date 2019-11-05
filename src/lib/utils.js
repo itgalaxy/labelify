@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const url = require("url");
-const cosmiconfig = require("cosmiconfig");
+const { cosmiconfig } = require("cosmiconfig");
 const got = require("got");
 const pkgUp = require("pkg-up");
 const hostedGitInfo = require("hosted-git-info");
@@ -27,9 +27,9 @@ function buildGotOptions(options = {}) {
     options.headers = {};
   }
 
-  options.headers["user-agent"] = `labelify/${
-    pkg.version
-  } (https://github.com/itgalaxy/labelify)`;
+  options.headers[
+    "user-agent"
+  ] = `labelify/${pkg.version} (https://github.com/itgalaxy/labelify)`;
 
   return options;
 }
@@ -95,7 +95,7 @@ function parseGitUrl(giturl) {
 }
 
 function protocolToRepresentation(protocol) {
-  if (protocol.substr(-1) === ":") {
+  if (protocol.slice(-1) === ":") {
     // eslint-disable-next-line no-param-reassign
     protocol = protocol.slice(0, -1);
   }
@@ -110,7 +110,7 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
 
   if (!platform) {
     throw new Error(
-      `Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'`
+      "Can't resolve your platform. Please use 'platform' options or add 'repository' field to 'package.json'"
     );
   }
 
@@ -151,7 +151,7 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
       user = decodeURIComponent(matched[1].replace(/^:/, ""));
     } else {
       throw new Error(
-        `Can't resolve 'user' from 'repository' field in 'package.json'. Please correct 'repository' field.`
+        "Can't resolve 'user' from 'repository' field in 'package.json'. Please correct 'repository' field."
       );
     }
 
@@ -159,7 +159,7 @@ function getPlatformAndEndpoint(repositoryURL, options = {}) {
       project = decodeURIComponent(matched[2]);
     } else {
       throw new Error(
-        `Can't resolve 'project' from 'repository' field in 'package.json'. Please correct 'repository' field.`
+        "Can't resolve 'project' from 'repository' field in 'package.json'. Please correct 'repository' field."
       );
     }
   } else {
