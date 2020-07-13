@@ -54,7 +54,7 @@
     "prettier": "^1.18.2",
     "remark-cli": "^7.0.0",
     "remark-preset-lint-itgalaxy": "^15.0.0",
-    "standard-version": "^7.0.0"
+    "standard-version": "^8.0.1"
   },
   "scripts": {
     "labelify": "node ./bin/labelify --overlap",
